@@ -1,12 +1,37 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <el-container>
+      <el-header>
+        <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" router>
+          <el-menu-item index="/author">Author</el-menu-item>
+          <el-menu-item index="/article">Article</el-menu-item>
+        </el-menu>
+      </el-header>
+      <el-main>
+        <router-view/>
+      </el-main>
+      <el-footer>
+        <p id="footer">Copyright © 2018 Yuchen Cheng. All Rights Reserved.</p>
+      </el-footer>
+    </el-container>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  data () {
+    return {
+      activeIndex: '1'
+    }
+  },
+  methods: {
+    handleSelect (key, keyPath) {
+      console.log(key, keyPath)
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -16,14 +41,10 @@
   text-align: center;
   color: #2c3e50;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+#footer {
+  color: lightgray;
+  text-align: center;
+  font-size: small;
 }
 </style>
