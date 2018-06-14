@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     querySearchAsync (queryString, cb) {
-      let results = queryString && queryString.length >= 4 ? this.authorIds.filter(this.createStateFilter(queryString)) : []
+      let results = queryString && queryString.length >= 3 ? this.authorIds.filter(this.createStateFilter(queryString)) : []
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
         cb(results)
