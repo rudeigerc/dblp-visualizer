@@ -2,7 +2,7 @@
   <div id="app">
     <el-container>
       <el-header>
-        <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" router>
+        <el-menu class="el-menu" mode="horizontal" router>
           <el-menu-item index="/author">Author</el-menu-item>
           <el-menu-item index="/article">Article</el-menu-item>
           <el-menu-item index="/relationship">Relationship</el-menu-item>
@@ -20,17 +20,7 @@
 
 <script>
 export default {
-  name: 'App',
-  data () {
-    return {
-      activeIndex: '1'
-    }
-  },
-  methods: {
-    handleSelect (key, keyPath) {
-      console.log(key, keyPath)
-    }
-  }
+  name: 'App'
 }
 </script>
 

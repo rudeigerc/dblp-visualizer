@@ -11,8 +11,11 @@
       </el-row>
     </el-header>
     <el-main>
-      <svg width="1280" height="540"/>
+      <svg width="1280" height="460"/>
     </el-main>
+    <el-footer>
+      <p>{{ description }}</p>
+    </el-footer>
   </el-container>
 </template>
 
@@ -31,11 +34,12 @@ export default {
       graph: {},
       simulation: null,
       link: null,
-      node: null
+      node: null,
+      description: null
     }
   },
   mounted () {
-    axios.get('test.json')
+    axios.get('relationship.json')
       .then(response => {
         this.data = response.data
         this.authorIds = Object.keys(response.data).map(key => {
@@ -46,7 +50,6 @@ export default {
   methods: {
     querySearchAsync (queryString, cb) {
       let results = queryString && queryString.length >= 4 ? this.authorIds.filter(this.createStateFilter(queryString)) : []
-      console.log(results)
       clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
         cb(results)
@@ -57,17 +60,24 @@ export default {
         return state.value.toString().indexOf(queryString) === 0
       }
     },
+    lookup (name) {
+      axios.get('http://lookup.dbpedia.org/api/search/KeywordSearch', { params: {'QueryString': name} })
+        .then(response => {
+          this.description = response.data.results.length === 0 ? name : response.data.results[0].description
+        })
+    },
     generate () {
       d3.selectAll('svg > *').remove()
       this.graph = this.data[parseInt(this.authorId)]
+      this.lookup(this.graph.nodes[0].name)
 
       const svg = d3.select('svg')
       const width = +svg.attr('width')
       const height = +svg.attr('height')
-      const color = d3.scaleOrdinal().range(['red', 'green', 'blue', '#6b486b', '#a05d56', '#d0743c', '#ff8c00'])
+      const color = d3.scaleOrdinal(d3.schemeAccent)
 
       this.simulation = d3.forceSimulation()
-        .force('link', d3.forceLink().id(d => { return d.id }).distance(100))
+        .force('link', d3.forceLink().id(d => { return d.id }).distance(150))
         .force('charge', d3.forceManyBody())
         .force('center', d3.forceCenter(width / 2, height / 2))
 
