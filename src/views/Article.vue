@@ -52,7 +52,7 @@ export default {
         .attr('fill', d => { return color(d.group) })
 
       this.node.append('title')
-        .text(d => { return d.name })
+        .text(d => { return d.id })
 
       this.node.append('text')
         .attr('x', 12)

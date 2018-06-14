@@ -65,6 +65,9 @@ export default {
         .then(response => {
           this.description = response.data.results.length === 0 ? name : response.data.results[0].description
         })
+        .catch(_ => {
+          this.description = name
+        })
     },
     generate () {
       d3.selectAll('svg > *').remove()
@@ -105,7 +108,7 @@ export default {
         .attr('fill', d => { return color(d.group) })
 
       this.node.append('title')
-        .text(d => { return d.name })
+        .text(d => { return d.id })
 
       this.node.append('text')
         .attr('x', 12)
