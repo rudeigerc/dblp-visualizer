@@ -5,6 +5,7 @@
         <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" @select="handleSelect" router>
           <el-menu-item index="/author">Author</el-menu-item>
           <el-menu-item index="/article">Article</el-menu-item>
+          <el-menu-item index="/relationship">Relationship</el-menu-item>
         </el-menu>
       </el-header>
       <el-main>
