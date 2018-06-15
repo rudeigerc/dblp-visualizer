@@ -61,7 +61,7 @@ export default {
       }
     },
     lookup (name) {
-      axios.get('http://lookup.dbpedia.org/api/search/KeywordSearch', { params: {'QueryString': name} })
+      axios.get('http://lookup.dbpedia.org/api/search/KeywordSearch', { params: { 'QueryString': name } })
         .then(response => {
           this.description = response.data.results.length === 0 ? name : response.data.results[0].description
         })
